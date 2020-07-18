@@ -1,0 +1,95 @@
+<div class="container-fluid" style="margin-top: 30px">
+  <div class="row">
+    <div class="col-md-5 col-md-offset-3">
+      <app-spinner-loader *ngIf="isLoading"></app-spinner-loader>
+      <app-alert [message]="errorMessage" (handler)="errorMessage=null" *ngIf="errorMessage"></app-alert>
+      <div class="panel-group" *ngIf="!isLoading">
+        <div class="panel panel-primary">
+          <div class="panel-heading"> Candidate Information </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <label for="name">Name</label>
+                      <p id="name">{{candidate.firstName}}</p>
+                    </div>
+                    <div class="row">
+                      <label for="gender">Gender</label>
+                      <p id="gender">{{candidate.gender}}</p>
+                    </div>
+                    <div class="row">
+                      <label for="email">Email</label>
+                      <p id="email">{{candidate.email}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6" style="text-align: center">
+                    <div class="row">
+                      <label for="surname">Surname</label>
+                      <p id="surname">{{candidate.lastName}}</p>
+                    </div>
+                    <div class="row">
+                      <label for="age">Age</label>
+                      <p id="age">{{candidate.age}}</p>
+                    </div>
+                    <div class="row">
+                      <label for="phone">Phone number</label>
+                      <p id="phone">{{candidate.phoneNumber}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <img [src]="'data:image/jpeg;base64,' + candidate.picture" *ngIf="candidate.picture" width="150px">
+                  <img src="assets/images/candidate.png" alt="#" *ngIf="!candidate.picture" width="150px">
+                  <br>
+                  <br>
+                  <button class="btn btn-default" (click)="onUpload()">Upload</button>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <button class="btn btn-info" style="margin-right: 3px" routerLink="/candidates">
+                Return
+              </button>
+              <button class="btn btn-success" [routerLink]="['../update']" [disabled]="isUploading">
+                Edit
+              </button>
+            </div>
+          </div>
+        <div class="panel panel-primary" *ngIf="showRegistration">
+          <div class="panel-heading">Registration Information</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="col-md-3">
+                  <label for="date">Date:</label>
+                  <p class="form-control" id="date">{{registrationDate}}</p>
+                </div>
+                <div class="col-md-9">
+                  <label>Courses: </label>
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>Name </th>
+                      <th>Type</th>
+                      <th>Available spots</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let course of courses">
+                      <td>{{course.name}}</td>
+                      <td>{{course.type}}</td>
+                      <td>{{course.numberOfStudents}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+<app-upload-image *ngIf="isUploading && !isLoading" (imageUploaded)="uploadImage($event)"></app-upload-image>

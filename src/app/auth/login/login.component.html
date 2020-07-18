@@ -1,0 +1,48 @@
+<div class="container-fluid" style="margin-top: 20px">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <form (ngSubmit)="onSubmit()" #f="ngForm">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Login</div>
+          <div class="panel-body">
+            <app-alert [message]="errorMessage" *ngIf="errorMessage" (handler)="errorMessage = null"></app-alert>
+            <label for="username">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              name="username"
+              ngModel
+              required>
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              ngModel
+              required>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-primary" type="submit">Login</button>
+          </div>
+        </div>
+      </form>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Sing in with
+        </div>
+        <div class="panel-body">
+          <div class="login-buttons">
+            <a [href]="githubUri" class="btn btn-default" type="button" *ngIf="githubUri">
+              <span class="fa fa-github"></span> Github</a>
+            <a [href]="facebookUri" class="btn btn-default" type="button" *ngIf="facebookUri">
+              <span class="fa fa-facebook"></span> Facebook</a>
+            <a [href]="googleUri" class="btn btn-default" type="button" *ngIf="googleUri">
+              <span class="fa fa-google"></span> Google</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

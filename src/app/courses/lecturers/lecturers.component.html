@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <app-alert [button]="button" (handler)="handleDeleteAlert($event)"
+             [message]="message" *ngIf="message"></app-alert>
+  <app-alert [message]="errorMessage" *ngIf="errorMessage" (handler)="clearError()"></app-alert>
+  <app-spinner-loader *ngIf="isLoading"></app-spinner-loader>
+  <div class="panel-body parent-panel" *ngIf="!isLoading">
+    <h1 style="margin-top: 0">Lecturers</h1>
+    <div>
+      <button class="btn btn-primary" (click)="onAdd()" *ngIf="isAuthorized">Add</button>
+      <button class="btn btn-success" *ngIf="selectedLecturer != null" (click)="onEdit()">Edit</button>
+      <button class="btn btn-danger" *ngIf="selectedLecturer != null" (click)="onDelete()">Delete</button>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body child-panel"
+           [ngStyle]="{'height.px': isAuthorized ? '300' : '339'}">
+        <ul class="list-group">
+          <li *ngFor="let lecturer of lecturers; let i = index">
+            <a class="list-group-item" (click)="onSelected(i)"
+               [ngClass]="{'active': selectedLecturer != null && lecturer.id === selectedLecturer.id}">
+              {{lecturer.firstName}} {{lecturer.lastName}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<body>
+<div class="container-fluid" style="margin-top: 20px">
+  <div class="row">
+    <div class="col-md-6" [ngClass]="candidatesOpened ? 'col-md-offset-2': 'col-md-offset-3'">
+      <app-spinner-loader *ngIf="isLoading"></app-spinner-loader>
+      <div class="panel panel-primary" *ngIf="!isLoading">
+        <app-alert [message]="message" [button]="button" (handler)="handleAlert($event)" *ngIf="message"></app-alert>
+        <app-alert [message]="errorMessage" (handler)="clearError()" *ngIf="errorMessage"></app-alert>
+        <div class="panel-heading">
+          <h1 class="text-left">
+            Mentors
+            <button class="btn btn-success btn-circle" (click)="onAddMentor()">
+              <span class="glyphicon center glyphicon-plus"></span>
+            </button>
+          </h1>
+        </div>
+        <div class="panel-body">
+          <div *ngIf="isEditing">
+            <div class="stretch">
+              <div>
+                <input type="text" placeholder="First name..." id="name" class="form-control"
+                       [(ngModel)]="inputMentor.firstName" (change)="inputChange('firstName')">
+                <span class="help-block">{{serverErrors['firstName']}}</span>
+              </div>
+              <div>
+                <input type="text" placeholder="Last name..." class="form-control"
+                       [(ngModel)]="inputMentor.lastName" (change)="inputChange('lastName')">
+                <span class="help-block">{{serverErrors['lastName']}}</span>
+              </div>
+              <div class="mentor-select">
+                <button class="btn btn-success" (click)="onConfirm()" [disabled]="!checkInput()">
+                  <span class="glyphicon center glyphicon-ok"></span>
+                </button>
+                <button class="btn btn-danger" (click)="onCancel()">
+                  <span class="glyphicon center glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="list-group-item stretch" *ngFor="let mentor of visibleMentors; let i = index">
+            <span>
+              {{mentor.firstName}} {{mentor.lastName}}
+            </span>
+            <a (click)="onCandidates(mentor.id, i)">Candidates</a>
+            <a (click)="onEdit(i)">Edit</a>
+            <a (click)="onDelete(mentor)">Delete</a>
+          </div>
+        </div>
+      </div>
+      <app-pagination entityName="Mentors" (visibleEntitiesChanged)="updateVisibleMentors($event)" [entities]="mentors"></app-pagination>
+    </div>
+    <app-mentor-candidates (closeComponent)="onCloseCandidates()" *ngIf="candidatesOpened"
+                           [mentorChanged]="candidatesMentorChanged" [mentors]="mentors"></app-mentor-candidates>
+  </div>
+</div>
+</body>

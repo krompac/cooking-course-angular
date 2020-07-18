@@ -1,0 +1,21 @@
+<nav class="navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" style="pointer-events: none">Cooking Course</a>
+    </div>
+    <ul class="nav navbar-nav" *ngIf="isAuthenticated">
+      <li><a routerLink="/candidates">Registrations</a></li>
+      <li><a routerLink="/courses">Courses</a></li>
+      <li><a routerLink="/mentors" *ngIf="isAuthorized">Mentors</a></li>
+<!--      <li><a routerLink="/users">Users</a></li>-->
+    </ul>
+    <ul class="nav navbar-nav pull-right">
+      <li>
+        <a *ngIf="isAuthenticated" style="pointer-events: none">{{currentUserRole}}</a>
+      </li>
+      <li>
+        <a class="logout" *ngIf="isAuthenticated" (click)="onLogout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>

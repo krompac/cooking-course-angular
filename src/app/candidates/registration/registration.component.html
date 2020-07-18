@@ -1,0 +1,55 @@
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+  <app-add-candidate [isChildForm]="true" [editMode]="editMode" [singUpForm]="candidateForm"
+                     [serverErrors]="serverErrors"></app-add-candidate>
+  <div class="row">
+    <div class="col-md-7 col-md-offset-3">
+      <app-alert [message]="errorMessage" *ngIf="errorMessage" (handler)="clearError()"></app-alert>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          {{editMode ? 'Update' : 'Add'}} Registration Information
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4">
+              <app-date-time-picker dateAsText="{{registrationForm.get('registrationDate').value}}"
+                                    (date)="handleDateChange($event)"
+                                    [serverError]="serverErrors['registration.registrationDate']"
+                                    placeholder="Registration date:"></app-date-time-picker>
+            </div>
+            <div class="col-md-8">
+              <div formArrayName="courses">
+                <label>Courses: </label>
+                <ul class="list-group">
+                  <div *ngFor="let course of availableCourses; let i = index">
+                    <li>
+                      <div class="list-group-item-heading">
+                        <mat-checkbox style="margin-right: 5px" (change)="onChecked($event, i)"
+                               [checked]="checkForChecked(course)" color="primary"
+                               [disabled]="(course.numberOfStudents === 0 && canCheck(course))">{{ course.name}}</mat-checkbox>
+                      </div>
+                      <div class="list-group-item-text">
+                        <p>{{course.type}}</p>
+                        <p>Remaining number of students: {{course.numberOfStudents}}</p>
+                      </div>
+                    </li>
+                  </div>
+                </ul>
+              </div>
+              <span class="help-block">
+                {{serverErrors['registration.courses']}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <button class="btn btn-primary" type="submit" style="margin-right: 3px"
+                  [disabled]="candidateForm.invalid">{{editMode ? 'Update' : 'Register'}}</button>
+          <button class="btn btn-danger" type="button" routerLink="/candidates">Return</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<app-spinner-loader *ngIf="isLoading && errorMessage != null"></app-spinner-loader>

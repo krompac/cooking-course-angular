@@ -1,0 +1,63 @@
+<div class="panel panel-default" *ngIf="!isLoading">
+  <div class="panel-body" style="height: 422px">
+    <app-alert [message]="alertMessage" (handler)="handleAlert($event)"
+               [button]="button" *ngIf="alertMessage != null"></app-alert>
+    <div>
+      <h2 style="text-align: center; margin-top: 0">
+        {{course.name}}
+        <span class="text-right">
+          <button class="btn btn-success btn-xs" [routerLink]="['edit']" *ngIf="isAuthorized">Edit</button>
+        </span>
+      </h2>
+    </div>
+    <div class="row" style="margin-top: 15px">
+      <div class="col-md-4">
+        <h4 class="text-left">{{course.type}}</h4>
+      </div>
+      <div class="col-md-8">
+        <h5 class="text-right">
+          Number of available spots: {{course.numberOfStudents}}
+        </h5>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 30px">
+      <div class="col-md-6">
+        <h4>Lecturers:</h4>
+        <div class="lecturers">
+          <table class="table">
+            <tbody>
+            <tr *ngFor="let lecturer of course.lecturers">
+              <td>{{lecturer.firstName}}</td>
+              <td>{{lecturer.lastName}}</td>
+            </tr>
+            <tr><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-6 paddingless">
+        <h4>Candidates:</h4>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let registration of courseRegistrations.slice(0 , 4)">
+            <p class="list-group-item-text">
+              {{registration.candidate.firstName + ' ' + registration.candidate.lastName}}
+              <span class="pull-right" *ngIf="isAuthorized">
+                <button class="btn btn-danger btn-xs" (click)="onRemoveCandidate(registration)">X</button>
+              </span>
+            </p>
+          </li>
+          <li style="list-style-type: none; text-align: right" *ngIf="courseRegistrations && courseRegistrations.length > 4">
+            <button class="btn btn-default" style="margin: 3px" (click)="openCourseRegistrations()">View all</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" style="margin: -20px 0 0;" *ngIf="!changesSaved">
+  <button class="btn btn-success" (click)="saveChanges(removedRegistrationsIds)">Save Changes</button>
+  <button class="btn btn-danger" (click)="onCancel()">Cancel</button>
+</div>
+<app-spinner-loader *ngIf="isLoading"></app-spinner-loader>
+
+

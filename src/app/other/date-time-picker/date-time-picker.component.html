@@ -1,0 +1,8 @@
+<mat-form-field>
+  <input matInput [matDatepicker]="dp" placeholder="{{placeholder}}"
+         [formControl]="dateControl" [errorStateMatcher]="matcher" (dateInput)="handleChange()">
+  <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+  <mat-datepicker #dp disabled="false"></mat-datepicker>
+  <mat-error *ngIf="dateControl.invalid && !dateControl.hasError('serverError')">Please enter valid date!</mat-error>
+  <mat-error *ngIf="dateControl.hasError('serverError')">{{serverError}}</mat-error>
+</mat-form-field>

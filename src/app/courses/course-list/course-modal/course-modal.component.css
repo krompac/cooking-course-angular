@@ -1,0 +1,68 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 50;
+}
+
+.alert-box {
+  position: fixed;
+  top: 20vh;
+  left: 30vw;
+  width: 40vw;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+
+.col-md-6 {
+  padding: 5px;
+}
+
+.left-col {
+  padding-left: 0;
+  padding-right: 5px;
+}
+
+.right-col {
+  padding-right: 0;
+}
+
+h3 {
+  margin: 0;
+}
+
+button {
+  margin-right: 3px;
+}
+
+ul > li {
+  display: block;
+  margin: 0;
+  padding: 10px 5px;
+}
+
+.help-block {
+  color: red;
+}
+
+ul.list-group {
+  max-height: 200px;
+  overflow-y: auto;
+}

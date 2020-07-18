@@ -1,0 +1,30 @@
+<app-alert *ngIf="message" [message]="message" (handler)="handleAlert($event)" [button]="button"></app-alert>
+<div mat-dialog-content style="padding: 5px">
+  <table mat-table [dataSource]="registrations" class="mat-elevation-z0" style="width: 100%">
+    <ng-container matColumnDef="firstName">
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': registrationsToDelete.includes(element.id) ? '#d9534f' : 'white'}"
+      > {{element.candidate.firstName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="lastName">
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': registrationsToDelete.includes(element.id) ? '#d9534f' : 'white'}"
+      > {{element.candidate.lastName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="remove">
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': registrationsToDelete.includes(element.id) ? '#d9534f' : 'white'}">
+        <button mat-raised-button style="color: #d9534f"
+                *ngIf="!registrationsToDelete.includes(element.id)"
+                (click)="removeRegistration(element.id)">Remove</button>
+        <button mat-raised-button
+                *ngIf="registrationsToDelete.includes(element.id)"
+                (click)="undoRemove(element.id)">Undo</button>
+      </td>
+    </ng-container>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>
+<div mat-dialog-actions *ngIf="registrationsToDelete && registrationsToDelete.length > 0">
+  <button mat-raised-button style="margin-right: 3px" (click)="onSave()">Save</button>
+  <button mat-raised-button (click)="registrationsToDelete.length = 0">Reset</button>
+</div>

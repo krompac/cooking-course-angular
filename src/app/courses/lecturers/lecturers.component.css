@@ -1,0 +1,24 @@
+button {
+  margin-right: 3px;
+  margin-bottom: 5px;
+}
+
+.parent-panel {
+  height: 422px;
+  padding-bottom: 10px;
+}
+
+.child-panel {
+  height: 300px;
+  padding: 0;
+  overflow-y: auto;
+}
+
+li > a {
+  border-radius: 0;
+  cursor: pointer;
+}
+
+li > input {
+  border-radius: 0;
+}

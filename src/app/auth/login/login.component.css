@@ -1,0 +1,8 @@
+a.btn {
+  margin: 3px;
+}
+
+.login-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}

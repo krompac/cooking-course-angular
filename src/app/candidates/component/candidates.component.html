@@ -1,0 +1,54 @@
+<body>
+<div class="container-fluid" style="margin-top: 20px">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <app-alert [message]="deleteMessage" (handler)="onDeleteConfirm($event)"
+                 *ngIf="deleteMessage" [button]="button"></app-alert>
+      <app-alert [message]="errorMessage" *ngIf="errorMessage" (handler)="handleErrorModal()"></app-alert>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h1 class="text-left" >Candidates!</h1>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive" *ngIf="candidates.length > 0">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Registered</th>
+                <th>Show</th>
+                <th>Update</th>
+                <th>Delete</th>
+              </tr>
+              </thead>
+              <tbody *ngIf="!isLoading">
+              <tr *ngFor="let candidate of visibleCandidates">
+                <td>{{candidate.firstName}}</td>
+                <td>{{candidate.lastName}}</td>
+                <td> {{candidate.registration !== null ? 'Yes' : 'No'}}
+                  <span *ngIf="candidate.registration !== null && candidate.registration.courses.length === 0"
+                        class="glyphicon glyphicon-question-sign"
+                        title="User isn't enrolled in any course"></span>
+                </td>
+                <td><a [routerLink]="[candidate.id, 'show']">Show</a></td>
+                <td><a [routerLink]="[candidate.id, 'update']">Update</a></td>
+                <td><a (click)="onDelete(candidate.id)">Delete</a></td>
+              </tr>
+              </tbody>
+              <app-spinner-loader *ngIf="isLoading"></app-spinner-loader>
+            </table>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <button [routerLink]="['new']" class="btn btn-info" type="button"
+             [disabled]="isLoading">Add candidate</button>
+          <button [routerLink]="['registration']" class="btn btn-info" type="button"
+             [disabled]="isLoading">New registration</button>
+        </div>
+      </div>
+      <app-pagination entityName="Candidates" [entities]="candidates" (visibleEntitiesChanged)="changeVisibleCandidates($event)"></app-pagination>
+    </div>
+  </div>
+</div>
+</body>

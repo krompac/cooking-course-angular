@@ -1,0 +1,119 @@
+<div class="backdrop"></div>
+<form (ngSubmit)="onSubmit()" #courseForm="ngForm">
+  <div class="panel panel-primary alert-box" >
+    <app-alert [button]="button" (handler)="deleteCourse($event)"
+               [message]="message" *ngIf="message != null"></app-alert>
+    <app-alert [message]="errorMessage" (handler)="clearError()" *ngIf="errorMessage != null"></app-alert>
+    <div class="panel-heading">
+      <h3>{{editMode ? 'EDIT' : 'ADD'}} COURSE
+        <span class="pull-right">
+          <button class="btn btn-danger btn-circle btn-close" type="button" (click)="onClose()">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </span>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-11" style="margin-left: 4.16667%">
+          <div class="form-group">
+            <label for="name">Course Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control"
+              required
+              ngModel>
+            <div class="help-block" *ngIf="courseForm.controls.name">
+              <span *ngIf="courseForm.controls.name.hasError('required') && courseForm.controls.name.touched">
+                -course name is required
+              </span>
+              <span *ngIf="courseForm.controls.name.hasError('serverError')">
+                {{serverErrors['name']}}
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 left-col">
+              <div class="form-group" style="margin-bottom: 0">
+                <label for="type">Course Type</label>
+                <select name="type" id="type" class="form-control" ngModel>
+                  <option value="BASIC">BASIC</option>
+                  <option value="INTERMEDIATE">INTERMEDIATE</option>
+                  <option value="ADVANCED">ADVANCED</option>
+                </select>
+              </div>
+              <h4>Current Lecturers:</h4>
+              <div>
+                <ul class="list-group">
+                  <li class="list-group-item" *ngFor="let lecturer of currentLecturers; let i = index">
+                    <p class="list-group-item-text">
+                      {{lecturer.firstName + ' ' + lecturer.lastName}}
+                      <span class="pull-right">
+                      <button class="btn btn-danger btn-xs" type="button" (click)="onRemoveLecturer(i)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                      </button>
+                    </span>
+                    </p>
+                  </li>
+                </ul>
+                <div class="help-block">
+                  <span *ngIf="lecturersAdded && currentLecturers.length == 0">
+                    -add some lecturers
+                  </span>
+                  <span>{{serverErrors['lecturers']}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 right-col">
+              <div class="form-group" style="margin-bottom: 0">
+                <label for="students">Number of available students</label>
+                <input
+                  type="number"
+                  id="students"
+                  name="numberOfStudents"
+                  class="form-control"
+                  pattern="^[1-9]+[0-9]*$"
+                  required=""
+                  ngModel
+                  min="1"
+                  oninput="validity.valid||(value='');">
+                <div class="help-block" *ngIf="courseForm.controls.numberOfStudents">
+                  <span *ngIf="courseForm.controls.numberOfStudents.hasError('required')">
+                    -enter number of students
+                  </span>
+                  <span *ngIf="courseForm.controls.numberOfStudents.hasError('serverError')">
+                    {{serverErrors['numberOfStudents']}}
+                  </span>
+                </div>
+              </div>
+              <h4>Available Lecturers:</h4>
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let lecturer of availableLecturers; let i = index">
+                  <p class="list-group-item-text">
+                    {{lecturer.firstName + ' ' + lecturer.lastName}}
+                  </p>
+                  <button class="btn btn-primary btn-xs" type="button" (click)="onAddLecturer(i)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer" style="padding: 5px;">
+      <button class="btn btn-success" type="submit"
+              [disabled]="courseForm.invalid || currentLecturers.length < 1">Save</button>
+      <button class="btn btn-danger" type="button" *ngIf="editMode"
+              (click)="onDelete()">Delete</button>
+      <span class="pull-right">
+        <button class="btn btn-default" type="button" (click)="onReset()">
+          Reset<span class="glyphicon glyphicon-backward" style="margin-left: 5px"></span>
+        </button>
+      </span>
+    </div>
+  </div>
+</form>

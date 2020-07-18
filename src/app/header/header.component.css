@@ -1,0 +1,20 @@
+li > a {
+  cursor: pointer;
+}
+
+li > a:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+li > a:focus {
+  background: none;
+}
+
+.logout {
+  color: red;
+}
+
+.login {
+  color: forestgreen;
+}

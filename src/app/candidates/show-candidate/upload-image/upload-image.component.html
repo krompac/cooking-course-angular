@@ -1,0 +1,27 @@
+<div class="fluid-container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Upload a new candidate image</div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="file">Select File</label>
+                  <input type="file" id="file" class="file" (change)="imageSelected($event)">
+                  <br>
+                  <button class="btn btn-primary" style="margin-right: 3px" (click)="onSubmit()">Submit</button>
+                  <button class="btn btn-danger" (click)="onCancel()">Cancel</button>
+                </div>
+                <div class="col-md-6">
+                  <img [src]="'data:image/png;base64,' + localUrl" *ngIf="localUrl" class="imgPlaceholder" width="200px">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

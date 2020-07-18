@@ -1,0 +1,65 @@
+<div class="col-md-2">
+  <div class="panel panel-default" *ngIf="!isLoading">
+    <app-alert [message]="errorMessage" (handler)="errorMessage=null" *ngIf="errorMessage"></app-alert>
+    <div class="panel-body candidate-panel-body">
+      <button class="btn btn-default btn-circle btn-close" (click)="onCloseCandidates()">
+        <span class="glyphicon center glyphicon-remove"></span>
+      </button>
+      <div class="mentor-select" *ngIf="isReassigningAll">
+        <select class="form-control" [(ngModel)]="selectedMentorIndex" style="background-color: black; color: white">
+          <option *ngFor="let mentor of mentors; let i = index"
+                  value="{{i}}">{{mentor.firstName}} {{mentor.lastName}}
+          </option>
+        </select>
+        <button class="btn btn-success btn-xs" (click)="onReassignAllConfirm()">
+          <span class="glyphicon center glyphicon-ok"></span>
+        </button>
+        <button class="btn btn-danger btn-xs" (click)="onCancelReassign()">
+          <span class="glyphicon center glyphicon-remove"></span>
+        </button>
+      </div>
+      <div class="stretch" style="margin: 1px" *ngIf="!isReassigningAll">
+        <div class="dropdown" appDropdown>
+          <button class="btn btn-primary dropdown-toggle" role="button" style="cursor: pointer">
+            <strong>
+              {{candidatesMentor.firstName}} {{candidatesMentor.lastName}}
+            </strong>
+            <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li *ngFor="let mentor of mentors; let i = index">
+              <a style="cursor: pointer" (click)="onCandidates(mentor.id, i)">
+                {{mentor.firstName}} {{mentor.lastName}}</a>
+            </li>
+          </ul>
+        </div>
+        <button class="btn btn-transfer pull-right" *ngIf="candidates.length > 0"
+                style="margin-top: 5px"
+                (click)="onReassignAll()">
+          <span class="glyphicon glyphicon-share-alt"></span>
+        </button>
+      </div>
+      <div *ngFor="let candidate of candidates; let i = index">
+        <div class="mentor-select" *ngIf="isReassigning[i]">
+          <select class="form-control" [(ngModel)]="selectedMentorIndex">
+            <option *ngFor="let mentor of mentors; let k = index"
+                    value="{{k}}">{{mentor.firstName}} {{mentor.lastName}}
+            </option>
+          </select>
+          <button class="btn btn-success btn-xs" (click)="onReassignConfirm(i)">
+            <span class="glyphicon center glyphicon-ok"></span>
+          </button>
+          <button class="btn btn-danger btn-xs" (click)="onCancelReassign(i)">
+            <span class="glyphicon center glyphicon-remove"></span>
+          </button>
+        </div>
+        <div class="list-group-item">
+              <span>{{candidate.firstName}} {{candidate.lastName}}</span>
+          <button class="btn btn-transfer pull-right" (click)="onReassign(candidate, i)">
+            <span class="glyphicon glyphicon-share-alt"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-spinner-loader *ngIf="isLoading"></app-spinner-loader>
+</div>

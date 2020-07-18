@@ -1,0 +1,17 @@
+a {
+   cursor: pointer;
+}
+
+button {
+  margin-right: 3px;
+}
+
+td > span {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.pagination>li.active>a {
+  background: #386DBB;
+  color: #fff;
+}

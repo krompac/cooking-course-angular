@@ -1,0 +1,19 @@
+.paddingless {
+  padding: 0;
+}
+
+ul {
+  border-radius: 0;
+}
+
+li {
+  padding-right: 5px;
+  border-radius: 0;
+  border-right: none;
+}
+
+.overflow-list {
+  max-height: 444px;
+  overflow-y: auto;
+  padding-left: 15px;
+}

@@ -1,0 +1,26 @@
+<nav aria-label="Page navigation" class="pull-left">
+  <ul class="pagination" style="margin-top: 0" *ngIf="entities.length > pageSize">
+    <li>
+      <a aria-label="Previous" (click)="changePage(activePage - 1)">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li *ngFor="let page of pages" (click)="changePage(page)" [ngClass]="this.activePage == page ? 'active': 'none'"><a>{{page + 1}}</a></li>
+    <li>
+      <a aria-label="Next" (click)="changePage(activePage + 1)">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+<div class="pull-right" style="display: flex;" *ngIf="entities.length > 5">
+  <p>{{entityName}} per page</p>
+  <select class="form-control" (change)="updatePageSize($event.target.value)">
+    <option value="{{5}}">5</option>
+    <option value="{{10}}">10</option>
+    <option value="{{15}}">15</option>
+    <option value="{{20}}">20</option>
+    <option value="{{30}}">30</option>
+    <option value="{{_entities.length + 1}}">All</option>
+  </select>
+</div>

@@ -1,0 +1,12 @@
+ul {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.help-block {
+  color: red;
+}
+
+.panel-heading {
+  font-weight: bold;
+}

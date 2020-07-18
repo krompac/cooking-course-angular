@@ -1,0 +1,5 @@
+.col-md-2 {
+  max-height: 390px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

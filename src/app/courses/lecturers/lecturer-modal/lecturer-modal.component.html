@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>{{isEdit ? 'Update' : 'Add'}} Lecturer</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>First name</mat-label>
+    <input matInput [formControl]="getControl('firstName')" [errorStateMatcher]="matcher">
+    <mat-error *ngIf="getControl('firstName').touched && getControl('firstName').hasError('required')">
+      First name is required!
+    </mat-error>
+    <mat-error *ngIf="getControl('firstName').hasError('serverError')">{{serverErrors['firstName']}}</mat-error>
+  </mat-form-field>
+  <br>
+  <br *ngIf="getControl('firstName').hasError('serverError')">
+  <mat-form-field>
+    <mat-label>Last name</mat-label>
+    <input matInput [formControl]="getControl('lastName')" [errorStateMatcher]="matcher">
+    <mat-error *ngIf="getControl('lastName').touched && getControl('lastName').hasError('required')">
+      Last name is required!
+    </mat-error>
+    <mat-error *ngIf="getControl('lastName').hasError('serverError')">{{serverErrors['lastName']}}</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button type="submit" (click)="onSave()" [disabled]="isLoading">Save</button>
+  <button mat-stroked-button mat-dialog-close [disabled]="isLoading">Close</button>
+</div>

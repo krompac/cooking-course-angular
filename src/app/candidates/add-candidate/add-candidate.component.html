@@ -1,0 +1,102 @@
+<form [formGroup]="singUpForm" (ngSubmit)="onSubmit()">
+  <div class="container-fluid">
+    <div class="row" style="margin-top: 30px">
+      <div class="col-md-6 col-md-offset-3">
+        <app-alert [message]="errorMessage" *ngIf="errorMessage" (handler)="clearError()"></app-alert>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <span>{{editMode ? 'Update' : 'Add'}} Candidate Information</span>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" class="form-control" formControlName="firstName">
+                <div *ngIf="singUpForm.get('firstName').errors && singUpForm.get('firstName').touched">
+                  <span class="help-block" *ngIf="(singUpForm.get('firstName').hasError('required'))
+                         || singUpForm.get('firstName').hasError('blankInput')">
+                    -first name is required</span>
+                  <span class="help-block" *ngIf="singUpForm.get('firstName').hasError('serverError')">
+                    {{serverErrors['firstName']}}</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" class="form-control" formControlName="lastName">
+                <div *ngIf="singUpForm.get('lastName').errors && singUpForm.get('lastName').touched">
+                  <span class="help-block" *ngIf="(singUpForm.get('lastName').hasError('required')
+                        || singUpForm.get('lastName').hasError('blankInput'))">
+                    -last name is required</span>
+                  <span class="help-block" *ngIf="singUpForm.get('lastName').hasError('serverError')">
+                    {{serverErrors['lastName']}}</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="gender">Gender:</label>
+                <select id="gender" class="form-control" formControlName="gender">
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="age">Age:</label>
+                <input type="number" id="age" class="form-control" formControlName="age" min="1"
+                       oninput="validity.valid || (value='');">
+                <div *ngIf="singUpForm.get('age').errors && singUpForm.get('age').touched">
+                  <span class="help-block" *ngIf="(singUpForm.get('age').hasError('required')
+                        || singUpForm.get('age').hasError('pattern'))">
+                    -age is required</span>
+                  <span class="help-block" *ngIf="singUpForm.get('age').hasError('serverError')">
+                    {{serverErrors['age']}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <label for="email">Email:</label>
+                <input type="text" id="email" class="form-control" formControlName="email">
+                <div *ngIf="singUpForm.get('email').errors != null && singUpForm.get('email').touched">
+                  <span class="help-block"
+                        *ngIf="singUpForm.get('email').errors.required">
+                    -email is required</span>
+                  <span class="help-block"
+                        *ngIf="singUpForm.get('email').errors.email">
+                    -invalid email</span>
+                  <span class="help-block"
+                        *ngIf="singUpForm.get('email').errors.serverError">
+                    {{serverErrors['email']}}</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber">
+                <div *ngIf="singUpForm.get('phoneNumber').touched && singUpForm.get('phoneNumber').errors">
+                  <span class="help-block"
+                        *ngIf="singUpForm.get('phoneNumber').errors.required">
+                    -phone number is required</span>
+                  <span class="help-block"
+                        *ngIf="singUpForm.get('phoneNumber').errors.pattern">
+                    -needs to be exactly 10 digits</span>
+                  <span class="help-block" *ngIf="singUpForm.get('phoneNumber').errors.serverError">
+                    {{serverErrors['phoneNumber']}}</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="mentor">Mentor:</label>
+                <select id="mentor" class="form-control" formControlName="mentorId">
+                  <option *ngFor="let mentor of availableMentors;"
+                          value="{{mentor.id}}">{{mentor.firstName + ' ' + mentor.lastName}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-right: 3px" type="submit"
+                [disabled]="singUpForm.invalid"
+                *ngIf="!isChildForm">Submit</button>
+        <button class="btn btn-danger" type="button"
+                *ngIf="!isChildForm" routerLink="">Cancel</button>
+      </div>
+    </div>
+  </div>
+</form>
